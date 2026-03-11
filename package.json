@@ -7,5 +7,18 @@
   },
   "author": "zohar/michael",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheZohar11/smart_spend.git"
+  },
+  "keywords": [],
+  "bugs": {
+    "url": "https://github.com/TheZohar11/smart_spend/issues"
+  },
+  "homepage": "https://github.com/TheZohar11/smart_spend#readme",
+  "type": "module",
+  "dependencies": {
+    "mongodb": "^7.1.0"
+  }
 }
