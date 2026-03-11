@@ -1,6 +1,7 @@
 //sever code here
 import express from "express";
 import dotenv from "dotenv";
+import MongoClient from "mongodb";
 
 dotenv.config();
 
