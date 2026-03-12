@@ -31,7 +31,31 @@ async function main() {
     //connect to atlas database
     await client.connect();
     console.log("Connected to MongoDB Atlas");
-  
+    //insert a new user
+    const db = client.db(dbName);
+    const userCollection = db.collection("users");
+    await userCollection.insertOne({ 
+      name:"Joseph", 
+      email:"joseph@gmail.com", 
+      password:"123456"
+    });
+    console.log("New user created");
+    //get all users
+    const users = await userCollection.find({}).toArray();
+    console.log("All users", users);
+
+    // expenses collection 
+    const expensesCollection = db.collection("expenses");
+    await expensesCollection.insertOne({
+      amount: 50,
+      description: "food",
+      category: "meat",
+      date: new Date(),
+    });
+    console.log("Sample expense added");
+    const expenses = await expensesCollection.find({}).toArray();
+    console.log("All expenses", expenses);
+
   } catch (error) {
     console.error("Error connecting to MongoDB Atlas", error);
   }
