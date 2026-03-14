@@ -22,12 +22,13 @@ router.post("/login", async (req, res) => {
       { email: user.email },
       process.env.ACCESS_TOKEN_SECRET,
     );
+
     res.status(200).json({
       message: "login successfully",
       accessToken,
     });
   } catch (e) {
-    console.error("FULL ERROR LOG:", e); // This prints the EXACT error to your VS Code terminal
+    console.error("FULL ERROR LOG:", e);
     res.status(500).json({
       message: "Server error",
       errorName: e.name,
