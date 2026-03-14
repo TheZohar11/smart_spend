@@ -1,6 +1,6 @@
 import express from "express";
 import dotenv from "dotenv";
-import { MongoClient } from "mongodb";
+import { MongoClient, ObjectId } from "mongodb";
 import * as bcrypt from "bcrypt";
 import validator from "validator";
 
@@ -34,9 +34,12 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
+//bring back all spesific user expenses
 app.get("/api/expenses", async (req, res) => {
   try {
-    const expenses = await expensesCollection.find({}).toArray();
+    const { userId } = req.query;
+    const filter = userId ? { userId: new ObjectId(userId) } : {};
+    const expenses = await expensesCollection.find(filter).toArray();
     res.json(expenses);
   } catch (error) {
     res.status(500).json({ message: "Error fetching expenses" });
@@ -44,13 +47,19 @@ app.get("/api/expenses", async (req, res) => {
   }
 });
 
+//add a new expense for a specific user
 app.post("/api/expenses", async (req, res) => {
   try {
-    const { amount, description, category } = req.body;
+    const { amount, description, category, userId } = req.body;
+    if (!userId) {
+      res.status(400).json({ message: "userId is required" });
+      return;
+    }
     const expense = await expensesCollection.insertOne({
       amount,
       description,
       category,
+      userId: new ObjectId(userId),
       date: new Date(),
     });
     res.status(201).json(expense);
@@ -59,6 +68,8 @@ app.post("/api/expenses", async (req, res) => {
     console.error("Error adding expense", error);
   }
 });
+
+//add a new user
 app.post("/users", async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -90,20 +101,31 @@ app.post("/users", async (req, res) => {
     res.json({ message: "insert user got massed up" });
   }
 });
-// Example: Insert a new user (for demonstration, not a route)
-// (Remove or comment out in production)
-/*
-async function demoInsertUser() {
-  await userCollection.insertOne({
-    name: "Joseph",
-    email: "joseph@gmail.com",
-    password: "123456",
-  });
-  console.log("New user created");
-  const users = await userCollection.find({}).toArray();
-  console.log("All users", users);
-}
-*/
+
+//delete an expense (only if it belongs to the user)
+//how the client should delete an expense:
+//DELETE /api/expenses/507f1f77bcf86cd799439011?userId=507f1f77bcf86cd799439011
+app.delete("/api/expenses/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const userId = req.query.userId;
+    if (!userId) {
+      res.status(400).json({ message: "userId is required" });
+      return;
+    }
+    const result = await expensesCollection.deleteOne({
+      _id: new ObjectId(id),
+      userId: new ObjectId(userId),
+    });
+    if (result.deletedCount === 0) {
+      res.status(404).json({ message: "Expense not found or not yours" });
+      return;
+    }
+    res.json(result);
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting expense" });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
