@@ -21,11 +21,19 @@ router.post("/login", async (req, res) => {
     const accessToken = jwt.sign(
       { email: user.email },
       process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "1h" },
     );
+    const refreshToken = jwt.sign(
+      { email: user.email },
+      process.env.REFRESH_TOKEN_SECRET,
+      { expiresIn: "7d" },
+    );
+    //need to save refresh token in db
 
     res.status(200).json({
       message: "login successfully",
       accessToken,
+      refreshToken,
     });
   } catch (e) {
     console.error("FULL ERROR LOG:", e);
@@ -37,4 +45,26 @@ router.post("/login", async (req, res) => {
   }
 });
 
+router.post("/token", (req, res) => {
+  const refreshToken = req.body.token;
+  if (!refreshToken) {
+    return res.status(401);
+  }
+  //check if refresh tokem is in db and then need to verify
+  jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+    if (err) {
+      res.status(403);
+    }
+    const accessToken = jwt.sign(
+      { email: user.email },
+      process.env.ACCESS_TOKEN_SECRET,
+      { expiresIn: "1h" },
+    );
+    res.json({ accessToken });
+  });
+});
+
+router.delete("/logout", (req, res) => {
+  //delete all tokens in db exeprt the one in req (token !== req.body.token)
+});
 export default router;
