@@ -1,8 +1,15 @@
 import express from "express";
 import dotenv from "dotenv";
+import { v4 as uuidv4 } from "uuid";
 import { MongoClient, ObjectId } from "mongodb";
 import * as bcrypt from "bcrypt";
 import validator from "validator";
+import userRoutes from "./routes/userRoutes.js";
+import {
+  connectDB,
+  usersCollection,
+  expensesCollection,
+} from "./db/dbConnect.js";
 
 dotenv.config();
 
@@ -14,21 +21,6 @@ const url = process.env.MONGODB_URI;
 if (!url) {
   throw new Error("Missing MONGODB_URI in .env");
 }
-const client = new MongoClient(url);
-const dbName = "smart_spend";
-
-let usersCollection;
-let expensesCollection;
-
-async function connectDB() {
-  await client.connect();
-  const db = client.db(dbName);
-  usersCollection = db.collection("users");
-  expensesCollection = db.collection("expenses");
-  console.log("Connected to MongoDB Atlas");
-}
-
-connectDB().catch((e) => console.error(e));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
@@ -61,6 +53,7 @@ app.post("/api/expenses", async (req, res) => {
       category,
       userId: new ObjectId(userId),
       date: new Date(),
+      ID: uuidv4(),
     });
     res.status(201).json(expense);
   } catch (error) {
@@ -126,7 +119,13 @@ app.delete("/api/expenses/:id", async (req, res) => {
     res.status(500).json({ message: "Error deleting expense" });
   }
 });
-
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+connectDB()
+  .then(() => {
+    app.use("/users", userRoutes);
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error("Failed to connect", err);
+  });
