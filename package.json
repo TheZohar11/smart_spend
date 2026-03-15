@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "client": "cd client && npx expo start",
+    "client:android": "cd client && npx expo start --android",
+    "client:ios": "cd client && npx expo start --ios"
   },
   "author": "zohar/michael",
   "license": "ISC",
