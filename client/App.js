@@ -12,17 +12,19 @@ import Landing from "./screens/Landing";
 const Stack = createNativeStackNavigator();
 
 function RootStack() {
-  <Stack.Navigator
-    initialRouteName="Landing"
-    screenOptions={{ headerStyle: { backgroundColor: "tomato" } }}
-  >
-    <Stack.Screen name="Home" component={Home} />
-    <Stack.Screen
-      name="Landing"
-      component={Landing}
-      options={{ title: "Welcome" }}
-    />
-  </Stack.Navigator>;
+  return (
+    <Stack.Navigator
+      initialRouteName="Landing"
+      screenOptions={{ headerStyle: { backgroundColor: "tomato" } }}
+    >
+      <Stack.Screen
+        name="Landing"
+        component={Landing}
+        options={{ title: "Welcome" }}
+      />
+      <Stack.Screen name="Home" component={Home} />
+    </Stack.Navigator>
+  );
 }
 
 export default function App() {

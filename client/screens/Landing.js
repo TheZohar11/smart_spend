@@ -5,8 +5,8 @@ export default function Landing() {
     <>
       <View>
         <Text>Landing screen</Text>
-        <Button>login</Button>
-        <Button>register</Button>
+        <Button title="login" />
+        <Button title="register" />
       </View>
     </>
   );
