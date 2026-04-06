@@ -7,8 +7,11 @@ export default function LandingScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>welcome to landing screen</Text>
-      <MyButton text="register" onPress={() => navigation.navigate("Home")} />
-      <MyButton text="login" />
+      <MyButton
+        text="register"
+        onPress={() => navigation.navigate("Register")}
+      />
+      <MyButton text="login" onPress={() => navigation.navigate("Home")} />
     </View>
   );
 }
@@ -16,7 +19,7 @@ export default function LandingScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#5d9edf",
+    backgroundColor: "#cbd8db",
     justifyContent: "flex-start",
     alignItems: "center",
   },
