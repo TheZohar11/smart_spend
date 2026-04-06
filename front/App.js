@@ -1,6 +1,5 @@
-import "react-native-gesture-handler"; // 1. Must be first
-import { registerRootComponent } from "expo"; // 2. Add this import
-import { Text, View } from "react-native";
+import "react-native-gesture-handler";
+import { registerRootComponent } from "expo";
 import HomeScreen from "./app/screens/HomeScreen";
 import LandingScreen from "./app/screens/LandingScreen";
 import { NavigationContainer } from "@react-navigation/native";
