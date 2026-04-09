@@ -1,4 +1,5 @@
 import { View, Text, StyleSheet } from "react-native";
+import { Colors } from "../constants/Theme";
 
 export default function HomeScreen() {
   return (
@@ -15,6 +16,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#45aabb",
+    backgroundColor: Colors.softBlue,
   },
 });

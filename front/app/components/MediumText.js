@@ -1,4 +1,5 @@
 import { StyleSheet, View, Text } from "react-native";
+import { Colors } from "../constants/Theme";
 
 export default function MediumText({ text }) {
   return (
@@ -14,5 +15,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     padding: 10,
+    color: Colors.black,
   },
 });

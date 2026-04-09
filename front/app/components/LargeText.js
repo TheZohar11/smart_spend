@@ -1,8 +1,12 @@
 import { View, Text, StyleSheet } from "react-native";
+import { Colors } from "../constants/Theme";
+
 export default function LargeText({ text, color }) {
   return (
     <View style={styles.container}>
-      <Text style={[styles.text, { color: color ? color : "#777" }]}>
+      <Text
+        style={[styles.text, { color: color ? color : Colors.SecondaryText }]}
+      >
         {text}
       </Text>
     </View>

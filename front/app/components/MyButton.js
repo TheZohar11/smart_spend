@@ -1,4 +1,5 @@
 import { Pressable, View, Text, StyleSheet } from "react-native";
+import { Colors } from "../constants/Theme";
 
 export default function MyButton({ text, onPress, color }) {
   return (
@@ -15,7 +16,7 @@ export default function MyButton({ text, onPress, color }) {
 const styles = StyleSheet.create({
   container: {
     borderRadius: 8,
-    backgroundColor: "rgb(228, 143, 216)",
+    backgroundColor: Colors.buttonbackgroundColor,
     margin: 20,
     padding: 20,
     width: 150,

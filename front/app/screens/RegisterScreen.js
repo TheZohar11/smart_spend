@@ -4,6 +4,7 @@ import { useState } from "react";
 import MyButton from "../components/MyButton";
 import MediumText from "../components/MediumText";
 import MyInput from "../components/MyInput";
+import { Colors } from "../constants/Theme";
 
 export default function RegisterScreen() {
   const navigation = useNavigation();
@@ -56,6 +57,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 10,
-    backgroundColor: "#cbd8db",
+    backgroundColor: Colors.whiteBackground,
   },
 });

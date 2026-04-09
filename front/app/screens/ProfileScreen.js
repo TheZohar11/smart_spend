@@ -2,6 +2,7 @@ import { StyleSheet, View } from "react-native";
 import LargeText from "../components/LargeText";
 import MyButton from "../components/MyButton";
 import { useNavigation } from "@react-navigation/native";
+import { Colors } from "../constants/Theme";
 
 export default function ProfileScreen() {
   const navigation = useNavigation();
@@ -18,6 +19,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#aaa",
+    backgroundColor: Colors.grey,
   },
 });
