@@ -13,7 +13,11 @@ export default function LandingScreen() {
         text="register"
         onPress={() => navigation.navigate("Register")}
       />
-      <MyButton text="login" onPress={() => navigation.navigate("Home")} />
+      <MyButton 
+        text="login" 
+        onPress={() => navigation.navigate("Login")} 
+        color={Colors.black}
+      />
     </View>
   );
 }
