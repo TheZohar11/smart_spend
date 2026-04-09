@@ -1,16 +1,53 @@
-import { View, StyleSheet, Text, TextInput } from "react-native";
-import MyButton from "../components/MyButton";
+import { View, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
+import { useState } from "react";
+import MyButton from "../components/MyButton";
+import MediumText from "../components/MediumText";
+import MyInput from "../components/MyInput";
+import { Colors } from "../constants/Theme";
 
 export default function RegisterScreen() {
   const navigation = useNavigation();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  async function handleRegister() {
+    if (password !== confirmPassword) {
+      alert("password and conform password has to match");
+    } else {
+      try {
+        //TODO: send HTTP req with axios to create user route
+        navigation.navigate("Home");
+      } catch (error) {
+        console.error("error- ", error);
+      }
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>email</Text>
-      <TextInput style={styles.textInput} placeholder="enter your email" />
-      <Text style={styles.text}>password</Text>
-      <TextInput style={styles.textInput} placeholder="enter your password" />
-      <MyButton text="submit" onPress={() => navigation.navigate("Home")} />
+      <MediumText text="email" />
+      <MyInput
+        placeholder="enter your email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <MediumText text="password" />
+      <MyInput
+        placeholder="enter your password"
+        isSecureEntry={true}
+        value={password}
+        onChangeText={setPassword}
+      />
+      <MediumText text="confirm password" />
+      <MyInput
+        placeholder="confirm password"
+        isSecureEntry={true}
+        value={confirmPassword}
+        onChangeText={setConfirmPassword}
+      />
+      <MyButton text="submit" onPress={handleRegister} />
     </View>
   );
 }
@@ -20,20 +57,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     padding: 10,
-    backgroundColor: "#cbd8db",
-  },
-  text: {
-    marginTop: 30,
-    fontSize: 16,
-    fontWeight: "bold",
-    padding: 10,
-  },
-  textInput: {
-    backgroundColor: "#fff",
-    borderRadius: 10,
-    padding: 15,
-    margin: 10,
-    width: "80%",
-    maxWidth: 300,
+    backgroundColor: Colors.whiteBackground,
   },
 });
