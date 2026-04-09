@@ -1,12 +1,13 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import MyButton from "../components/MyButton";
+import LargeText from "../components/LargeText";
 
 export default function LandingScreen() {
   const navigation = useNavigation();
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>welcome to landing screen</Text>
+      <LargeText text="welcome to landing screen" color={"#383838"} />
       <MyButton
         text="register"
         onPress={() => navigation.navigate("Register")}
