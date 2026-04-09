@@ -1,11 +1,19 @@
 import { StyleSheet, TextInput } from "react-native";
 
-export default function MyInput({ placeholder, isSecureEntry }) {
+export default function MyInput({
+  placeholder,
+  isSecureEntry,
+  value,
+  onChangeText,
+}) {
   return (
     <TextInput
       style={styles.textInput}
       placeholder={placeholder}
       secureTextEntry={!!isSecureEntry}
+      value={value}
+      onChangeText={onChangeText}
+      autoCapitalize="none"
     />
   );
 }
