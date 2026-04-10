@@ -3,6 +3,7 @@ import { registerRootComponent } from "expo";
 import HomeScreen from "./app/screens/HomeScreen";
 import LandingScreen from "./app/screens/LandingScreen";
 import RegisterScreen from "./app/screens/RegisterScreen";
+import LoginScreen from "./app/screens/LoginScreen";
 import ProfileScreen from "./app/screens/ProfileScreen";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -53,6 +54,11 @@ function RootStack() {
       <Stack.Screen
         name="Register"
         component={RegisterScreen}
+        options={{ headerShown: true }}
+      />
+      <Stack.Screen
+        name="Login"
+        component={LoginScreen}
         options={{ headerShown: true }}
       />
     </Stack.Navigator>
