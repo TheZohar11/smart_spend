@@ -1,13 +1,35 @@
-// import React, { createContext, useState, useEffect, useContext } from 'react';
-// import api and secure storage files
-/*
-AuthContext: האובייקט שמחזיק את המידע הגלובלי.
+import React, { createContext, useState, useEffect, useContext } from "react";
+import { saveTokens, getAccessToken, clearTokens } from "./secureStorage";
 
-useState (user, isLoading): שומר את פרטי המשתמש ואת מצב הטעינה של האפליקציה.
+const AuthContext = createContext();
 
-useEffect (Check if logged in): בטעינה הראשונה של האפליקציה, בודק אם יש accessToken ב-Storage. אם כן – מעדכן את ה-State שהמשתמש מחובר.
+export const AuthProvider = ({ children }) => {
+  const [userToken, setUserToken] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-signIn(credentials): פונקציה שקוראת ל-API, מקבלת טוקנים, שומרת אותם ב-Storage דרך הקובץ הראשון, ומעדכנת את ה-State.
+  useEffect(() => {
+    (async () => {
+      const storedToken = await getAccessToken();
+      if (storedToken) setUserToken(storedToken);
+      setIsLoading(false);
+    })();
+  }, []);
 
-signOut(): מנקה את ה-Storage ומאפסת את ה-State ל-null.
-*/
+  const login = async (access, refresh) => {
+    await saveTokens(access, refresh);
+    setUserToken(access);
+  };
+
+  const logout = async () => {
+    await clearTokens();
+    setUserToken(null);
+  };
+
+  return (
+    <AuthContext.Provider value={{ userToken, isLoading, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+export const useAuth = () => useContext(AuthContext);
