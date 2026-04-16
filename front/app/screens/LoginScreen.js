@@ -5,6 +5,8 @@ import MyButton from "../components/MyButton";
 import MediumText from "../components/MediumText";
 import MyInput from "../components/MyInput";
 import { Colors } from "../constants/Theme";
+import * as SecureStore from "expo-secure-store";
+import { saveTokens } from "../services/secureStorage";
 
 export default function LoginScreen() {
   const navigation = useNavigation();
@@ -12,15 +14,18 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
 
   async function handleLogin() {
-    if (password !== confirmPassword) {
-      alert("password and conform password has to match");
-    } else {
-      try {
-        //TODO: send HTTP req with axios to create user route
-        navigation.navigate("Home");
-      } catch (error) {
-        console.error("error- ", error);
-      }
+    try {
+      //TODO: send HTTP req with axios to login user route
+      // still need to finish api file
+      const response = await api.post("/login", {
+        email: email,
+        password: password,
+      });
+      const { accessToken, refreshToken } = response.data;
+      await saveTokens(accessToken, refreshToken);
+      navigation.navigate("Home");
+    } catch (error) {
+      console.error("error- ", error);
     }
   }
 

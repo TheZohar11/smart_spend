@@ -13,9 +13,9 @@ export default function LandingScreen() {
         text="register"
         onPress={() => navigation.navigate("Register")}
       />
-      <MyButton 
-        text="login" 
-        onPress={() => navigation.navigate("Login")} 
+      <MyButton
+        text="login"
+        onPress={() => navigation.navigate("Login")}
         color={Colors.black}
       />
     </View>
@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.whiteBackground,
     justifyContent: "flex-start",
     alignItems: "center",
+    paddingTop: 150,
   },
   text: {
     margin: 25,
